@@ -1,294 +1,180 @@
 const wasteItems = [
   {
-    keys: [
-      "banana",
-      "banana peel",
-      "fruit peel",
-      "vegetable peel",
-      "food scrap",
-      "food scraps",
-      "leftover food",
-      "vegetable waste",
-      "fruit waste",
-      "tea leaves",
-      "coffee grounds"
-    ],
+    keys: ["banana", "banana peel", "fruit peel", "vegetable peel", "food scrap", "food scraps", "leftover food", "tea leaves", "coffee grounds"],
     category: "Wet Waste",
     icon: "🍃",
     tip: "Food and biodegradable waste generally belongs with wet/organic waste. Follow your local collection rules."
   },
-
   {
-    keys: [
-      "newspaper",
-      "news paper",
-      "paper",
-      "notebook",
-      "book",
-      "cardboard",
-      "carton",
-      "paper box",
-      "magazine"
-    ],
+    keys: ["newspaper", "paper", "notebook", "book", "cardboard", "carton", "magazine"],
     category: "Dry / Recyclable",
     icon: "📦",
     tip: "Keep paper and cardboard clean and dry where your local system accepts them for recycling."
   },
-
   {
-    keys: [
-      "plastic bottle",
-      "plastic bag",
-      "plastic wrapper",
-      "plastic container",
-      "plastic cup",
-      "plastic"
-    ],
+    keys: ["plastic bottle", "plastic bag", "plastic wrapper", "plastic container", "plastic cup", "plastic"],
     category: "Plastic",
     icon: "🧴",
     tip: "Check local recycling instructions because accepted plastic types can vary."
   },
-
   {
-    keys: [
-      "battery",
-      "batteries",
-      "phone battery",
-      "power bank",
-      "charger",
-      "earphones",
-      "headphones",
-      "keyboard",
-      "mouse",
-      "electronic",
-      "e-waste",
-      "ewaste"
-    ],
+    keys: ["battery", "batteries", "power bank", "charger", "earphones", "headphones", "keyboard", "mouse", "electronic", "e-waste", "ewaste"],
     category: "E-waste / Special",
     icon: "🔋",
     tip: "Do not put batteries or electronic items in ordinary household bins. Use an appropriate e-waste collection point."
   },
-
   {
-    keys: [
-      "glass bottle",
-      "glass jar",
-      "jar"
-    ],
+    keys: ["glass bottle", "glass jar", "jar"],
     category: "Glass / Recyclable",
     icon: "🍾",
     tip: "Handle broken glass carefully and follow your local collection instructions."
   },
-
   {
-    keys: [
-      "diaper",
-      "sanitary pad",
-      "medical waste",
-      "bandage"
-    ],
+    keys: ["diaper", "sanitary pad", "medical waste", "bandage"],
     category: "Special / Other",
     icon: "⚠️",
     tip: "These items may require separate handling. Follow local disposal guidance."
   }
 ];
 
-
 const quizQuestions = [
-
-  [
-    "Where would a banana peel usually go?",
-    "Wet Waste",
-    ["Wet Waste", "E-waste", "Paper", "Plastic"]
-  ],
-
-  [
-    "What is a newspaper mainly classified as?",
-    "Dry / Recyclable",
-    ["Wet Waste", "Dry / Recyclable", "E-waste", "Special Waste"]
-  ],
-
-  [
-    "Where should a household battery go?",
-    "E-waste / Special",
-    ["Wet Waste", "Paper", "E-waste / Special", "Food Waste"]
-  ],
-
-  [
-    "Which item is plastic?",
-    "Plastic",
-    ["Banana peel", "Newspaper", "Plastic bottle", "Tea leaves"]
-  ],
-
-  [
-    "What should you do when you are unsure?",
-    "Check local guidance",
-    ["Always guess", "Ignore it", "Check local guidance", "Mix everything"]
-  ],
-
-  [
-    "What helps make segregation easier?",
-    "Clear labels",
-    ["Clear labels", "More confusion", "No bins", "Guessing"]
-  ],
-
-  [
-    "Which is an example of wet waste?",
-    "Food scraps",
-    ["Food scraps", "Newspaper", "Battery", "Plastic bottle"]
-  ],
-
-  [
-    "Which is an example of dry/recyclable waste?",
-    "Cardboard",
-    ["Cardboard", "Fruit peel", "Battery", "Leftover food"]
-  ],
-
-  [
-    "Why is WasteWise useful?",
-    "It helps identify categories",
-    ["It creates waste", "It helps identify categories", "It replaces collection", "It burns waste"]
-  ],
-
-  [
-    "What should you follow for actual disposal?",
-    "Local waste rules",
-    ["Random advice", "Local waste rules", "Only this website", "No rules"]
-  ]
-
+  ["Where would a banana peel usually go?", "Wet Waste", ["Wet Waste", "E-waste", "Paper", "Plastic"]],
+  ["What is a newspaper mainly classified as?", "Dry / Recyclable", ["Wet Waste", "Dry / Recyclable", "E-waste", "Special Waste"]],
+  ["Where should a household battery go?", "E-waste / Special", ["Wet Waste", "Paper", "E-waste / Special", "Food Waste"]],
+  ["Which item is plastic?", "Plastic", ["Banana peel", "Newspaper", "Plastic bottle", "Tea leaves"]],
+  ["What should you do when you are unsure?", "Check local guidance", ["Always guess", "Ignore it", "Check local guidance", "Mix everything"]],
+  ["What helps make segregation easier?", "Clear labels", ["Clear labels", "More confusion", "No bins", "Guessing"]],
+  ["Which is an example of wet waste?", "Food scraps", ["Food scraps", "Newspaper", "Battery", "Plastic bottle"]],
+  ["Which is an example of dry/recyclable waste?", "Cardboard", ["Cardboard", "Fruit peel", "Battery", "Leftover food"]],
+  ["Why is WasteWise useful?", "It helps identify categories", ["It creates waste", "It helps identify categories", "It replaces collection", "It burns waste"]],
+  ["What should you follow for actual disposal?", "Local waste rules", ["Random advice", "Local waste rules", "Only this website", "No rules"]]
 ];
-
 
 let quizIndex = 0;
 let quizScore = 0;
 let selected = false;
 
+function $(id) {
+  return document.getElementById(id);
+}
 
-const $ = id => document.getElementById(id);
-
-
-const getData = () => {
+function getData() {
   return JSON.parse(
     localStorage.getItem("wastewiseData") ||
     '{"searched":0,"attempts":0,"best":0}'
   );
-};
-
-
-const saveData = data => {
-  localStorage.setItem(
-    "wastewiseData",
-    JSON.stringify(data)
-  );
-};
-
-
-function updateStats() {
-
-  const data = getData();
-
-  $("searchedCount").textContent = data.searched;
-
-  $("quizAttempts").textContent = data.attempts;
-
-  $("bestScore").textContent = `${data.best}/10`;
-
-  $("itemCount").textContent = wasteItems.length;
 }
 
+function saveData(data) {
+  localStorage.setItem("wastewiseData", JSON.stringify(data));
+}
+
+function updateStats() {
+  const data = getData();
+
+  if ($("searchedCount")) {
+    $("searchedCount").textContent = data.searched;
+  }
+
+  if ($("quizAttempts")) {
+    $("quizAttempts").textContent = data.attempts;
+  }
+
+  if ($("bestScore")) {
+    $("bestScore").textContent = `${data.best}/10`;
+  }
+
+  if ($("itemCount")) {
+    $("itemCount").textContent = wasteItems.length;
+  }
+}
 
 function toast(message) {
+  const box = $("toast");
 
-  const t = $("toast");
+  if (!box) return;
 
-  t.textContent = message;
-
-  t.classList.add("show");
+  box.textContent = message;
+  box.classList.add("show");
 
   setTimeout(() => {
-    t.classList.remove("show");
+    box.classList.remove("show");
   }, 2200);
 }
 
+function clearFinderResult() {
+  const result = $("finderResult");
 
-function findWaste(raw) {
+  if (!result) return;
 
-  const q = raw.trim().toLowerCase();
+  result.innerHTML = "";
+  result.classList.add("hidden");
+}
 
-  if (!q) {
+function findWaste(text) {
+  const query = text.trim().toLowerCase();
+
+  if (!query) {
     return null;
   }
 
   for (const item of wasteItems) {
-
     if (
       item.keys.some(
-        key => q.includes(key) || key.includes(q)
+        key => query.includes(key) || key.includes(query)
       )
     ) {
       return item;
     }
-
   }
 
   return {
     category: "Check Local Guidance",
     icon: "🔎",
-    tip: "We don't have this item in the prototype yet. Add it to the list after testing, or check your local waste authority's instructions."
+    tip: "We don't have this item in the prototype yet. Check your local waste authority's instructions."
   };
 }
 
-
 function showResult(item, searched) {
+  const result = $("finderResult");
 
-  const box = $("finderResult");
+  if (!result) return;
 
-  box.classList.remove("hidden");
-
-  box.innerHTML = `
+  result.innerHTML = `
     <div class="result-row">
-
-      <div class="result-icon">
-        ${item.icon}
-      </div>
+      <div class="result-icon">${item.icon}</div>
 
       <div>
+        <div class="result-category">${item.category}</div>
 
-        <div class="result-category">
-          ${item.category}
-        </div>
+        <h3>${searched.replace(/</g, "&lt;")}</h3>
 
-        <h3>
-          ${searched.replace(/</g, "&lt;")}
-        </h3>
-
-        <p class="result-help">
-          ${item.tip}
-        </p>
-
+        <p class="result-help">${item.tip}</p>
       </div>
-
     </div>
   `;
+
+  result.classList.remove("hidden");
 }
 
-
 function runSearch() {
+  const input = $("searchInput");
 
-  const raw = $("searchInput").value;
+  if (!input) return;
 
-  const item = findWaste(raw);
+  const text = input.value.trim();
+
+  // IMPORTANT:
+  // If the search box is empty, remove the old result.
+  if (!text) {
+    clearFinderResult();
+    return;
+  }
+
+  const item = findWaste(text);
 
   if (!item) {
-
-    $("finderResult").classList.add("hidden");
-
-    $("finderResult").innerHTML = "";
-
-    toast("Type an item first.");
-
-    $("searchInput").focus();
-
+    clearFinderResult();
     return;
   }
 
@@ -297,134 +183,122 @@ function runSearch() {
   data.searched++;
 
   saveData(data);
-
   updateStats();
 
-  showResult(item, raw);
+  showResult(item, text);
 }
 
-
 function focusFinder() {
+  const finder = document.querySelector("#finder");
 
-  document
-    .querySelector("#finder")
-    .scrollIntoView({
+  if (finder) {
+    finder.scrollIntoView({
       behavior: "smooth"
     });
+  }
 
   setTimeout(() => {
-    $("searchInput").focus();
+    if ($("searchInput")) {
+      $("searchInput").focus();
+    }
   }, 500);
 }
 
 
-/* SEARCH */
+/* -----------------------------
+   WASTE FINDER
+----------------------------- */
 
-$("searchBtn").addEventListener(
-  "click",
-  runSearch
-);
+const searchInput = $("searchInput");
+const searchButton = $("searchBtn");
+const clearButton = $("clearSearch");
 
-
-/* CLEAR BUTTON */
-
-function clearSearch() {
-
-  $("searchInput").value = "";
-
-  $("finderResult").classList.add("hidden");
-
-  $("finderResult").innerHTML = "";
-
-  $("searchInput").focus();
+if (searchButton) {
+  searchButton.addEventListener("click", runSearch);
 }
 
-
-$("clearSearch").addEventListener(
-  "click",
-  clearSearch
-);
-
-
-/* AUTOMATICALLY CLEAR OLD RESULT */
-
-$("searchInput").addEventListener(
-  "input",
-  () => {
-
-    if (!$("searchInput").value.trim()) {
-
-      $("finderResult").classList.add("hidden");
-
-      $("finderResult").innerHTML = "";
+if (clearButton) {
+  clearButton.addEventListener("click", () => {
+    if (searchInput) {
+      searchInput.value = "";
+      searchInput.focus();
     }
 
-  }
-);
+    clearFinderResult();
+  });
+}
 
+if (searchInput) {
 
-/* ENTER KEY */
+  searchInput.addEventListener("input", () => {
 
-$("searchInput").addEventListener(
-  "keydown",
-  event => {
+    // THIS is what makes the old result disappear
+    // as soon as the user deletes the search text.
+
+    if (searchInput.value.trim() === "") {
+      clearFinderResult();
+    }
+
+  });
+
+  searchInput.addEventListener("keydown", event => {
 
     if (event.key === "Enter") {
       runSearch();
     }
 
-  }
-);
+  });
+}
 
 
-/* QUICK SEARCH BUTTONS */
+/* Quick search buttons */
 
-document
-  .querySelectorAll(".quick-items button")
-  .forEach(button => {
+document.querySelectorAll(".quick-items button").forEach(button => {
 
-    button.addEventListener(
-      "click",
-      () => {
+  button.addEventListener("click", () => {
 
-        $("searchInput").value =
-          button.dataset.item;
+    if (!searchInput) return;
 
-        runSearch();
+    searchInput.value = button.dataset.item;
 
-      }
-    );
+    runSearch();
 
   });
 
-
-/* MOBILE MENU */
-
-$("menuBtn").addEventListener(
-  "click",
-  () => {
-
-    $("nav").classList.toggle("open");
-
-  }
-);
+});
 
 
-document
-  .querySelectorAll("nav a")
-  .forEach(link => {
+/* -----------------------------
+   MOBILE MENU
+----------------------------- */
 
-    link.addEventListener(
-      "click",
-      () => {
-        $("nav").classList.remove("open");
-      }
-    );
+const menuButton = $("menuBtn");
+const nav = $("nav");
+
+if (menuButton && nav) {
+
+  menuButton.addEventListener("click", () => {
+    nav.classList.toggle("open");
+  });
+
+}
+
+document.querySelectorAll("nav a").forEach(link => {
+
+  link.addEventListener("click", () => {
+
+    if (nav) {
+      nav.classList.remove("open");
+    }
 
   });
 
+});
 
-/* QUIZ */
+
+/* -----------------------------
+   QUIZ
+----------------------------- */
 
 function renderQuiz() {
 
@@ -433,21 +307,13 @@ function renderQuiz() {
     const data = getData();
 
     data.attempts++;
-
-    data.best = Math.max(
-      data.best,
-      quizScore
-    );
+    data.best = Math.max(data.best, quizScore);
 
     saveData(data);
-
     updateStats();
 
-    $("quizProgress").textContent =
-      "Quiz complete!";
-
-    $("quizScore").textContent =
-      `Score: ${quizScore}/10`;
+    $("quizProgress").textContent = "Quiz complete!";
+    $("quizScore").textContent = `Score: ${quizScore}/10`;
 
     $("quizContent").innerHTML = `
       <div class="question">
@@ -465,13 +331,11 @@ function renderQuiz() {
     return;
   }
 
+  const questionData = quizQuestions[quizIndex];
 
-  const [
-    question,
-    answer,
-    options
-  ] = quizQuestions[quizIndex];
-
+  const question = questionData[0];
+  const answer = questionData[1];
+  const options = questionData[2];
 
   $("quizProgress").textContent =
     `Question ${quizIndex + 1} of ${quizQuestions.length}`;
@@ -483,9 +347,7 @@ function renderQuiz() {
 
   selected = false;
 
-
   $("quizContent").innerHTML = `
-
     <div class="question">
       ${question}
     </div>
@@ -493,167 +355,129 @@ function renderQuiz() {
     <div class="options">
 
       ${options.map(option => `
-
-        <button
-          class="option"
-          data-answer="${option.replace(/"/g, "&quot;")}"
-        >
+        <button class="option" data-answer="${option}">
           ${option}
         </button>
-
       `).join("")}
 
     </div>
-
   `;
 
+  document.querySelectorAll(".option").forEach(button => {
 
-  document
-    .querySelectorAll(".option")
-    .forEach(button => {
+    button.addEventListener("click", () => {
 
-      button.addEventListener(
-        "click",
-        () => {
+      if (selected) return;
 
-          if (selected) {
-            return;
-          }
+      selected = true;
 
-          selected = true;
+      const correct =
+        button.dataset.answer === answer;
 
-          const correct =
-            button.dataset.answer === answer;
+      if (correct) {
+        quizScore++;
+      }
 
+      document.querySelectorAll(".option").forEach(option => {
 
-          if (correct) {
-            quizScore++;
-          }
-
-
-          document
-            .querySelectorAll(".option")
-            .forEach(option => {
-
-              if (
-                option.dataset.answer === answer
-              ) {
-
-                option.classList.add(
-                  "correct"
-                );
-
-              } else if (
-                option === button &&
-                !correct
-              ) {
-
-                option.classList.add(
-                  "wrong"
-                );
-
-              }
-
-            });
-
-
-          $("quizScore").textContent =
-            `Score: ${quizScore}`;
-
-          $("nextBtn").disabled = false;
-
+        if (option.dataset.answer === answer) {
+          option.classList.add("correct");
         }
-      );
+
+        if (
+          option === button &&
+          !correct
+        ) {
+          option.classList.add("wrong");
+        }
+
+      });
+
+      $("quizScore").textContent =
+        `Score: ${quizScore}`;
+
+      $("nextBtn").disabled = false;
 
     });
 
+  });
+
 }
 
+if ($("nextBtn")) {
 
-$("nextBtn").addEventListener(
-  "click",
-  () => {
+  $("nextBtn").addEventListener("click", () => {
 
-    if (selected) {
+    if (!selected) return;
 
-      quizIndex++;
+    quizIndex++;
 
-      renderQuiz();
+    renderQuiz();
 
-    }
+  });
 
-  }
-);
+}
 
+if ($("restartQuiz")) {
 
-$("restartQuiz").addEventListener(
-  "click",
-  () => {
+  $("restartQuiz").addEventListener("click", () => {
 
     quizIndex = 0;
-
     quizScore = 0;
 
     renderQuiz();
 
-  }
-);
+  });
+
+}
 
 
-/* TIPS */
+/* -----------------------------
+   TIPS
+----------------------------- */
 
 const tips = [
-
   "Keep recyclable materials clean and dry where your local system accepts them.",
-
   "When unsure about an item, check your local waste collection instructions instead of guessing.",
-
   "Put a simple picture or label near each household bin to make sorting quicker.",
-
   "Teach everyone at home the same basic waste categories.",
-
   "Start with a few common items and build the habit gradually."
-
 ];
 
+if ($("newTip")) {
 
-$("newTip").addEventListener(
-  "click",
-  () => {
+  $("newTip").addEventListener("click", () => {
 
     $("dailyTip").textContent =
-      tips[
-        Math.floor(
-          Math.random() * tips.length
-        )
-      ];
+      tips[Math.floor(Math.random() * tips.length)];
 
-  }
-);
+  });
+
+}
 
 
-/* RESET PROGRESS */
+/* -----------------------------
+   RESET PROGRESS
+----------------------------- */
 
-$("resetData").addEventListener(
-  "click",
-  () => {
+if ($("resetData")) {
 
-    localStorage.removeItem(
-      "wastewiseData"
-    );
+  $("resetData").addEventListener("click", () => {
+
+    localStorage.removeItem("wastewiseData");
 
     updateStats();
 
-    toast(
-      "Your local prototype progress was reset."
-    );
+    toast("Your local prototype progress was reset.");
 
-  }
-);
+  });
+
+}
 
 
-/* START */
+/* -----------------------------
+   START WEBSITE
+----------------------------- */
 
 updateStats();
-
 renderQuiz();
