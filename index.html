@@ -7,174 +7,328 @@
   <meta name="description" content="WasteWise helps users quickly identify household waste categories and learn simple segregation habits.">
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-  <header class="topbar">
-    <a class="brand" href="#home" aria-label="WasteWise home">
-      <span class="brand-mark">♻</span>
-      <span>WasteWise</span>
-    </a>
-    <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
-    <nav id="nav">
-      <a href="#home">Home</a>
-      <a href="#finder">Waste Finder</a>
-      <a href="#guide">Waste Guide</a>
-      <a href="#quiz">Quiz</a>
-      <a href="#progress">Progress</a>
-    </nav>
-  </header>
 
-  <main>
-    <section class="hero" id="home">
-      <div class="hero-copy">
-        <p class="eyebrow">SMARTER WASTE SEGREGATION</p>
-        <h1>Know your waste.<br><span>Sort it right.</span></h1>
-        <p class="lead">Not sure where an item belongs? Search it, learn its category, and make everyday waste segregation easier.</p>
-        <div class="hero-actions">
-          <a class="btn primary" href="#finder">Find My Waste</a>
-          <a class="btn secondary" href="#guide">View Waste Guide</a>
-        </div>
-        <div class="mini-stats">
-          <div><strong id="itemCount">0</strong><span>items in finder</span></div>
-          <div><strong>5</strong><span>learning sections</span></div>
-          <div><strong>10</strong><span>quiz questions</span></div>
-        </div>
-      </div>
-      <div class="hero-card">
-        <div class="bin-icon">♻</div>
-        <h3>Start with one item</h3>
-        <p>Try searching for something you throw away every day.</p>
-        <button class="text-btn" onclick="focusFinder()">Try it →</button>
-      </div>
-    </section>
+<header class="topbar">
+  <a class="brand" href="#home" aria-label="WasteWise home">
+    <span class="brand-mark">♻</span>
+    <span>WasteWise</span>
+  </a>
 
-    <section class="section" id="finder">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">01 · FINDER</p>
-          <h2>Where does my waste go?</h2>
-          <p>Type an item and WasteWise will suggest its category.</p>
-        </div>
-      </div>
+  <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
 
-      <div class="finder-box">
-        <div class="search-row">
-          <label class="sr-only" for="searchInput">Search waste item</label>
-          <input id="searchInput" type="text" placeholder="Try: banana peel, newspaper, plastic bottle..." autocomplete="off">
-          <button class="btn primary" id="searchBtn">Find Category</button>
-        </div>
-        <div class="quick-items">
-          <span>Try:</span>
-          <button data-item="banana peel">Banana peel</button>
-          <button data-item="newspaper">Newspaper</button>
-          <button data-item="plastic bottle">Plastic bottle</button>
-          <button data-item="battery">Battery</button>
-          <button data-item="cardboard">Cardboard</button>
-        </div>
-        <div id="finderResult" class="finder-result hidden"></div>
-      </div>
-    </section>
+  <nav id="nav">
+    <a href="#home">Home</a>
+    <a href="#finder">Waste Finder</a>
+    <a href="#guide">Waste Guide</a>
+    <a href="#quiz">Quiz</a>
+    <a href="#progress">Progress</a>
+  </nav>
+</header>
 
-    <section class="section soft" id="guide">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">02 · GUIDE</p>
-          <h2>Learn the basics</h2>
-          <p>Simple examples help you understand common waste categories.</p>
-        </div>
-      </div>
-      <div class="guide-grid">
-        <article class="guide-card wet">
-          <div class="card-icon">🍃</div>
-          <h3>Wet Waste</h3>
-          <p>Food and other biodegradable household waste.</p>
-          <span>Examples: food scraps, fruit peels</span>
-        </article>
-        <article class="guide-card dry">
-          <div class="card-icon">📦</div>
-          <h3>Dry / Recyclable</h3>
-          <p>Clean, dry materials that may be recyclable.</p>
-          <span>Examples: paper, cardboard</span>
-        </article>
-        <article class="guide-card plastic">
-          <div class="card-icon">🧴</div>
-          <h3>Plastic</h3>
-          <p>Plastic packaging and containers.</p>
-          <span>Examples: bottles, containers</span>
-        </article>
-        <article class="guide-card ewaste">
-          <div class="card-icon">🔋</div>
-          <h3>E-waste</h3>
-          <p>Discarded electronic or battery-powered items.</p>
-          <span>Examples: batteries, old chargers</span>
-        </article>
-        <article class="guide-card special">
-          <div class="card-icon">⚠️</div>
-          <h3>Special Waste</h3>
-          <p>Items that need separate handling or local guidance.</p>
-          <span>Always follow local disposal rules.</span>
-        </article>
-      </div>
-      <p class="note">Note: Waste categories and collection rules can differ by location. WasteWise is an educational prototype; follow your local waste authority's instructions for actual disposal.</p>
-    </section>
+<main>
 
-    <section class="section" id="quiz">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">03 · LEARN & PLAY</p>
-          <h2>Quick segregation quiz</h2>
-          <p>Test what you know. Your score is saved on this device.</p>
-        </div>
-      </div>
-      <div class="quiz-card">
-        <div class="quiz-top">
-          <span id="quizProgress">Question 1 of 10</span>
-          <span id="quizScore">Score: 0</span>
-        </div>
-        <div id="quizContent"></div>
-        <div class="quiz-actions">
-          <button class="btn secondary" id="restartQuiz">Restart</button>
-          <button class="btn primary" id="nextBtn" disabled>Next</button>
-        </div>
-      </div>
-    </section>
+<section class="hero" id="home">
 
-    <section class="section soft" id="progress">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">04 · YOUR PROGRESS</p>
-          <h2>Small steps add up.</h2>
-          <p>Your activity is stored only in this browser for this prototype.</p>
-        </div>
-      </div>
-      <div class="progress-grid">
-        <div class="progress-card"><strong id="searchedCount">0</strong><span>items checked</span></div>
-        <div class="progress-card"><strong id="bestScore">0/10</strong><span>best quiz score</span></div>
-        <div class="progress-card"><strong id="quizAttempts">0</strong><span>quiz attempts</span></div>
-      </div>
-      <div class="tip-box">
-        <div>💡</div>
-        <div><h3>WasteWise tip</h3><p id="dailyTip">Keep waste dry when the category requires dry/recyclable material. When in doubt, check your local collection guidance.</p></div>
-        <button class="text-btn" id="newTip">New tip →</button>
-      </div>
-      <button class="btn secondary reset-data" id="resetData">Reset my progress</button>
-    </section>
+  <div class="hero-copy">
+    <p class="eyebrow">SMARTER WASTE SEGREGATION</p>
 
-    <section class="section final-cta">
+    <h1>
+      Know your waste.<br>
+      <span>Sort it right.</span>
+    </h1>
+
+    <p class="lead">
+      Not sure where an item belongs? Search it, learn its category,
+      and make everyday waste segregation easier.
+    </p>
+
+    <div class="hero-actions">
+      <a class="btn primary" href="#finder">Find My Waste</a>
+      <a class="btn secondary" href="#guide">View Waste Guide</a>
+    </div>
+
+    <div class="mini-stats">
       <div>
-        <p class="eyebrow">WASTEWISE</p>
-        <h2>One small check can make sorting easier.</h2>
-        <p>Use the finder, try the quiz, and share what you think should be improved.</p>
+        <strong id="itemCount">0</strong>
+        <span>items in finder</span>
       </div>
-      <a class="btn primary" href="#finder">Try Waste Finder</a>
-    </section>
-  </main>
 
-  <footer>
-    <p><strong>WasteWise</strong> · Design Thinking Prototype</p>
-    <p>Educational prototype for household waste segregation.</p>
-  </footer>
+      <div>
+        <strong>5</strong>
+        <span>learning sections</span>
+      </div>
 
-  <div class="toast" id="toast"></div>
-  <script src="app.js"></script>
+      <div>
+        <strong>10</strong>
+        <span>quiz questions</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-card">
+    <div class="bin-icon">♻</div>
+
+    <h3>Start with one item</h3>
+
+    <p>
+      Try searching for something you throw away every day.
+    </p>
+
+    <button class="text-btn" onclick="focusFinder()">
+      Try it →
+    </button>
+  </div>
+
+</section>
+
+
+<section class="section" id="finder">
+
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">01 · FINDER</p>
+      <h2>Where does my waste go?</h2>
+      <p>Type an item and WasteWise will suggest its category.</p>
+    </div>
+  </div>
+
+  <div class="finder-box">
+
+    <div class="search-row">
+
+      <label class="sr-only" for="searchInput">
+        Search waste item
+      </label>
+
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="Try: banana peel, newspaper, plastic bottle..."
+        autocomplete="off"
+      >
+
+      <button class="btn primary" id="searchBtn">
+        Find Category <span>→</span>
+      </button>
+
+      <button
+        class="clear-btn"
+        id="clearSearch"
+        type="button"
+        aria-label="Clear waste search"
+      >
+        Clear
+      </button>
+
+    </div>
+
+    <div class="quick-items">
+      <span>Try:</span>
+
+      <button data-item="banana peel">Banana peel</button>
+      <button data-item="newspaper">Newspaper</button>
+      <button data-item="plastic bottle">Plastic bottle</button>
+      <button data-item="battery">Battery</button>
+      <button data-item="cardboard">Cardboard</button>
+    </div>
+
+    <div id="finderResult" class="finder-result hidden"></div>
+
+  </div>
+
+</section>
+
+
+<section class="section soft" id="guide">
+
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">02 · GUIDE</p>
+      <h2>Learn the basics</h2>
+      <p>
+        Simple examples help you understand common waste categories.
+      </p>
+    </div>
+  </div>
+
+  <div class="guide-grid">
+
+    <article class="guide-card wet">
+      <div class="card-icon">🍃</div>
+      <h3>Wet Waste</h3>
+      <p>Food and other biodegradable household waste.</p>
+      <span>Examples: food scraps, fruit peels</span>
+    </article>
+
+    <article class="guide-card dry">
+      <div class="card-icon">📦</div>
+      <h3>Dry / Recyclable</h3>
+      <p>Clean, dry materials that may be recyclable.</p>
+      <span>Examples: paper, cardboard</span>
+    </article>
+
+    <article class="guide-card plastic">
+      <div class="card-icon">🧴</div>
+      <h3>Plastic</h3>
+      <p>Plastic packaging and containers.</p>
+      <span>Examples: bottles, containers</span>
+    </article>
+
+    <article class="guide-card ewaste">
+      <div class="card-icon">🔋</div>
+      <h3>E-waste</h3>
+      <p>Discarded electronic or battery-powered items.</p>
+      <span>Examples: batteries, old chargers</span>
+    </article>
+
+    <article class="guide-card special">
+      <div class="card-icon">⚠️</div>
+      <h3>Special Waste</h3>
+      <p>Items that need separate handling or local guidance.</p>
+      <span>Always follow local disposal rules.</span>
+    </article>
+
+  </div>
+
+  <p class="note">
+    Note: Waste categories and collection rules can differ by location.
+    WasteWise is an educational prototype; follow your local waste
+    authority's instructions for actual disposal.
+  </p>
+
+</section>
+
+
+<section class="section" id="quiz">
+
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">03 · LEARN & PLAY</p>
+      <h2>Quick segregation quiz</h2>
+      <p>Test what you know. Your score is saved on this device.</p>
+    </div>
+  </div>
+
+  <div class="quiz-card">
+
+    <div class="quiz-top">
+      <span id="quizProgress">Question 1 of 10</span>
+      <span id="quizScore">Score: 0</span>
+    </div>
+
+    <div id="quizContent"></div>
+
+    <div class="quiz-actions">
+      <button class="btn secondary" id="restartQuiz">
+        Restart
+      </button>
+
+      <button class="btn primary" id="nextBtn" disabled>
+        Next
+      </button>
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="section soft" id="progress">
+
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">04 · YOUR PROGRESS</p>
+      <h2>Small steps add up.</h2>
+      <p>
+        Your activity is stored only in this browser for this prototype.
+      </p>
+    </div>
+  </div>
+
+  <div class="progress-grid">
+
+    <div class="progress-card">
+      <strong id="searchedCount">0</strong>
+      <span>items checked</span>
+    </div>
+
+    <div class="progress-card">
+      <strong id="bestScore">0/10</strong>
+      <span>best quiz score</span>
+    </div>
+
+    <div class="progress-card">
+      <strong id="quizAttempts">0</strong>
+      <span>quiz attempts</span>
+    </div>
+
+  </div>
+
+  <div class="tip-box">
+
+    <div>💡</div>
+
+    <div>
+      <h3>WasteWise tip</h3>
+
+      <p id="dailyTip">
+        Keep waste dry when the category requires dry/recyclable
+        material. When in doubt, check your local collection guidance.
+      </p>
+    </div>
+
+    <button class="text-btn" id="newTip">
+      New tip →
+    </button>
+
+  </div>
+
+  <button class="btn secondary reset-data" id="resetData">
+    Reset my progress
+  </button>
+
+</section>
+
+
+<section class="section final-cta">
+
+  <div>
+    <p class="eyebrow">WASTEWISE</p>
+
+    <h2>
+      One small check can make sorting easier.
+    </h2>
+
+    <p>
+      Use the finder, try the quiz, and share what you think should be improved.
+    </p>
+  </div>
+
+  <a class="btn primary" href="#finder">
+    Try Waste Finder
+  </a>
+
+</section>
+
+</main>
+
+
+<footer>
+  <p>
+    <strong>WasteWise</strong> · Design Thinking Prototype
+  </p>
+
+  <p>
+    Educational prototype for household waste segregation.
+  </p>
+</footer>
+
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+
 </body>
 </html>
